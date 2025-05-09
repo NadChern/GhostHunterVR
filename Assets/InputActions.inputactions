@@ -1,0 +1,54 @@
+{
+    "name": "InputActions",
+    "maps": [
+        {
+            "name": "shootMap",
+            "id": "5b92ea0b-ef8f-4c4f-b34c-813e0c2177d1",
+            "actions": [
+                {
+                    "name": "RightShootTrigger",
+                    "type": "Button",
+                    "id": "780eb2ae-dd25-4992-a7ac-d3d162039aec",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "LeftShootTrigger",
+                    "type": "Button",
+                    "id": "0604091c-75be-47ef-ac9f-5b909c9b5b85",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "5ed9b7de-830b-4944-b90f-c92140642680",
+                    "path": "<XRController>{RightHand}/{TriggerButton}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RightShootTrigger",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "828b37c8-3307-4f61-887b-63a07fb68f0e",
+                    "path": "<XRController>{LeftHand}/{TriggerButton}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LeftShootTrigger",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

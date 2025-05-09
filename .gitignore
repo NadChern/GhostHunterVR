@@ -1,0 +1,68 @@
+# =============== #
+# Unity Generated #
+# =============== #
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Mm]emoryCaptures/
+
+
+# ===================== #
+# XR SDK Specific Files #
+# ===================== #
+*.apk
+*.aab
+*.obb
+
+
+# ============== #
+# OS Generated   #
+# ============== #
+.DS_Store
+Thumbs.db
+ehthumbs.db
+*.bak
+*.swp
+*.tmp
+
+# ============ #
+# IDEs         #
+# ============ #
+
+# Rider / IntelliJ
+.idea/
+*.sln.iml
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# VSCode
+.vscode/
+
+# ============ #
+# Builds       #
+# ============ #
+*.apk
+*.aab
+*.exe
+*.app
+*.zip
+
+# ============= #
+# Logs & Debug  #
+# ============= #
+*.log
+sysinfo.txt
+
+
+# ====================== #
+Assets/Samples
+Assets/TextMesh Pro
+Assets/VRTemplateAssets 
+Assets/LowPolyDungeon
+*.utmp
+
