@@ -15,7 +15,8 @@ public class DissolveState : IGhostState
         timer -= Time.fixedDeltaTime;
         if (timer <= 0)
         {
-            GameObject.Destroy(ghost.gameObject);
+            // return to pool
+            GhostPool.Instance.ReturnGhost(ghost.gameObject);
         }
     }
 

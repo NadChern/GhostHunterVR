@@ -3,11 +3,10 @@ using UnityEngine;
 
 public class SpawnArea : MonoBehaviour
 {
-    public GameObject ghost;
-    public Vector3 volumeSpawn; 
-    public float delaySpawn = 1f;
-    public int counter = 10;
-    
+    [SerializeField] private Vector3 volumeSpawn = new Vector3(4,4,4);
+    [SerializeField] private float delaySpawn = 2.0f;
+    [SerializeField] private int counter = 20;
+   
     public void SpawnActivate()
     {
         StartCoroutine(CoolDown());
@@ -32,7 +31,9 @@ public class SpawnArea : MonoBehaviour
         
         // ghost face forward
         Vector3 spawnPos = transform.position + offset; 
-        Quaternion spawnRot = Quaternion.LookRotation(Vector3.forward); ; // TO FIX!
-        Instantiate(ghost, spawnPos, spawnRot);
+        Quaternion spawnRot = Quaternion.LookRotation(Vector3.forward); 
+        
+        // use of GhostPool
+        GhostPool.Instance.GetGhost(spawnPos, spawnRot);
     }
 }

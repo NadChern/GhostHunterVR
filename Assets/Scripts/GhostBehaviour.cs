@@ -4,7 +4,7 @@ using UnityEngine;
 // (manages current state and transitions between them)
 
 [RequireComponent(typeof(GhostLogic))]
-public class GhostBehaviour : MonoBehaviour
+public class  GhostBehaviour : MonoBehaviour
 {
     private IGhostState _currentState;
     public GhostLogic ghost;

@@ -79,5 +79,26 @@ public class GhostLogic : MonoBehaviour, IDamageable
         health += healing;
         callback?.Invoke(this, health, false);
     }
+
+    public void ResetGhost()
+    {
+        // reset health
+        health = 10f;
+        
+        // reset rigidbody
+        if (rb != null)
+        {
+            rb.velocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+        }
+        
+        // re-enable collider
+        Collider ghostCollider = GetComponent<Collider>();
+        if (ghostCollider != null)
+        {
+            ghostCollider.enabled = true;
+        }
+        
+    }
 }
 

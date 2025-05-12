@@ -70,6 +70,7 @@
     <Compile Include="Assets\Scripts\IDamageable.cs" />
     <Compile Include="Assets\Scripts\ChaseState.cs" />
     <Compile Include="Assets\VRTemplateAssets\Scripts\StepManager.cs" />
+    <Compile Include="Assets\Scripts\GhostPool.cs" />
     <Compile Include="Assets\Scripts\DissolveState.cs" />
     <Compile Include="Assets\VRTemplateAssets\Scripts\AnchorVisuals.cs" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
