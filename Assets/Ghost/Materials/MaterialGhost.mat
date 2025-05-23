@@ -131,12 +131,12 @@ Material:
     - _Dissolve: 1
     - _DstBlend: 0
     - _EnvironmentReflections: 1
-    - _FresnelPower: 5
+    - _FresnelPower: 8.67
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _Metallic: 0
-    - _NoiseScale: 91.1
+    - _NoiseScale: 100
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _QueueControl: 0
@@ -153,11 +153,11 @@ Material:
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 0.6532188, g: 0, b: 0.7075472, a: 1}
-    - _DissolveColor: {r: 0.39201084, g: 0.63522005, b: 0.18177669, a: 0}
+    - _DissolveColor: {r: 0, g: 0, b: 0.8039216, a: 1}
     - _DissolveRange: {r: 0.5, g: 3, b: 0, a: 0}
-    - _EmisColor: {r: 4, g: 0.2347653, b: 0, a: 0}
+    - _EmisColor: {r: 11.868279, g: 16.11209, b: 17.40681, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _MainColor: {r: 0, g: 0, b: 1, a: 1}
+    - _MainColor: {r: 0.4116993, g: 0.07058824, b: 0.8352941, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

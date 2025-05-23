@@ -1,27 +1,40 @@
+using System;
 using UnityEngine;
 
-// Ghost Physics, Damage and Animation
-// implements IDamageable, hovering and flying physics using Rigidbody 
-// control of animation via triggers
+// Ghost Physics, Damage, Attack Player, Animation
+// Implements IDamageable, handles hovering, flying physics, death logic
 
 [RequireComponent(typeof(Rigidbody))]
 public class GhostLogic : MonoBehaviour, IDamageable
 {
-    public float maxVelocity = 2f;
-    public float maxAcceleration = 6f;
-    public float hoverRadius = 0.5f;
-    public Vector3 hoverNoiseFrequency = new Vector3(1f, 1f, 1f);
-    public float health = 10f;
+    // Static event: help to subscribe once,
+    // be notified any time any ghost dies (vs ref to every ghost)
+    public static event Action<GhostLogic> OnGhostDeath;
 
-    public Rigidbody rb;
-    public Transform player;
-    public Animator animator;
+    // Wave settings
+    private float maxVelocity;
+    private float maxAcceleration;
+    private float baseHealth;
+    private float chaseDistance;
+    private float attackCooldown;
+    private float attackDamage;
+
+    [SerializeField] private float hoverRadius = 0.5f;
+    [SerializeField] private Vector3 hoverNoiseFrequency = new Vector3(1f, 1f, 1f);
+
+    private float currentHealth;
+
+    public float AttackCooldown => attackCooldown;
+    public bool IsDead => currentHealth <= 0;
+
+    public Rigidbody rb { get; private set; }
+    public Transform player { get; private set; }
+    public Animator animator { get; private set; }
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
-       
     }
 
     void Start()
@@ -29,6 +42,18 @@ public class GhostLogic : MonoBehaviour, IDamageable
         player = Camera.main?.transform;
         Debug.Log(player);
     }
+
+    public void ApplySettings(WaveSettings waveSettings)
+    {
+        maxVelocity = waveSettings.ghostMaxVelocity;
+        maxAcceleration = waveSettings.ghostMaxAcceleration;
+        baseHealth = waveSettings.ghostHealth;
+        attackDamage = waveSettings.ghostAttackDamage;
+        attackCooldown = waveSettings.ghostAttackCooldown;
+        chaseDistance = waveSettings.ghostChaseDistance;
+        currentHealth = baseHealth;
+    }
+
     public void HoverAround(Vector3 target)
     {
         Vector3 noise = new Vector3(
@@ -52,53 +77,71 @@ public class GhostLogic : MonoBehaviour, IDamageable
         rb.AddForce(accel, ForceMode.Acceleration);
     }
 
+    // Attack player 
+    public void AttackPlayer()
+    {
+        if (player == null) return;
+
+        IDamageable playerHealth = player.GetComponent<IDamageable>();
+        if (playerHealth != null)
+        {
+            playerHealth.TakeDamage(attackDamage, player.position, Vector3.zero);
+        }
+    }
+
     public void PlayAnimation(string triggerName)
     {
         if (animator != null)
             animator.SetTrigger(triggerName);
     }
 
+
+    // Checks if player is within chase distance 
+    public bool IsPlayerInRange()
+    {
+        if (player == null) return false;
+        return Vector3.Distance(transform.position, player.position) <= chaseDistance;
+    }
+
     public void TakeDamage(float damage, Vector3 position, Vector3 normal, GameObject damageSource = null,
         IDamageable.DamageCallback callback = null)
     {
-        health -= damage;
-        Debug.Log($"{name} took {damage} damage. Remaining HP: {health}");
-        bool isDead = health <= 0;
+        currentHealth -= damage;
+        Debug.Log($"{name} took {damage} damage. Remaining HP: {currentHealth}");
+        callback?.Invoke(this, currentHealth, IsDead);
 
-        callback?.Invoke(this, health, isDead);
-        GetComponent<Collider>().enabled = false;
-
-        if (isDead)
-        {   Debug.Log($"{name} is dead. Switching to DissolveState.");
+        if (IsDead)
+        {
+            GetComponent<Collider>().enabled = false;
+            OnGhostDeath?.Invoke(this); // notify GameManager
+            Debug.Log($"{name} is dead. Switching to DissolveState.");
             GetComponent<GhostBehaviour>().SwitchState(new DissolveState());
         }
     }
 
     public void Heal(float healing, IDamageable.DamageCallback callback = null)
     {
-        health += healing;
-        callback?.Invoke(this, health, false);
+        currentHealth += healing;
+        callback?.Invoke(this, currentHealth, false);
     }
 
     public void ResetGhost()
     {
         // reset health
-        health = 10f;
-        
+        currentHealth = baseHealth;
+
         // reset rigidbody
         if (rb != null)
         {
-            rb.velocity = Vector3.zero;
+            rb.linearVelocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
         }
-        
+
         // re-enable collider
         Collider ghostCollider = GetComponent<Collider>();
         if (ghostCollider != null)
         {
             ghostCollider.enabled = true;
         }
-        
     }
 }
-

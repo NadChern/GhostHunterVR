@@ -41,10 +41,9 @@ public class GhostPool : MonoBehaviour
               return ghost;
        }
 
-       public GameObject GetGhost(Vector3 position, Quaternion rotation)
+       public GameObject GetGhost(Vector3 position, Quaternion rotation, WaveSettings waveSettings)
        {
-              GameObject ghost;
-              ghost = ghostPool.Count > 0 ? ghostPool.Dequeue() : CreateGhost();
+              GameObject ghost = ghostPool.Count > 0 ? ghostPool.Dequeue() : CreateGhost();
 
               // setup ghosts for use
               ghost.transform.position = position;
@@ -54,7 +53,8 @@ public class GhostPool : MonoBehaviour
               GhostLogic ghostLogic = ghost.GetComponent<GhostLogic>();
               if (ghostLogic != null)
               {
-                     ghostLogic.ResetGhost();
+                     ghostLogic.ResetGhost(); // reset rigidbody, health etc
+                     ghostLogic.ApplySettings(waveSettings); // apply wave-specific speed, health etc
               }
 
               return ghost;
@@ -66,7 +66,4 @@ public class GhostPool : MonoBehaviour
               ghost.SetActive(false);
               ghostPool.Enqueue(ghost);
        }
-
 }
-
-

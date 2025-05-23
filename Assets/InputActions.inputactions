@@ -22,6 +22,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "release",
+                    "type": "Button",
+                    "id": "f230c8e3-7bbb-4a79-9d08-e0b93d3fc7f2",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -44,6 +53,56 @@
                     "processors": "",
                     "groups": "",
                     "action": "LeftShootTrigger",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "21f5a76e-3ccd-4094-a410-bfa96372fc03",
+                    "path": "<XRController>{LeftHand}/{GripButton}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "release",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "665635d5-fe67-4770-af5c-377edca38fb9",
+                    "path": "<XRController>{LeftHand}/{TriggerButton}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "release",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "releaseItem",
+            "id": "91989cfc-00d0-45e6-99f2-a8cd87239717",
+            "actions": [
+                {
+                    "name": "release",
+                    "type": "Button",
+                    "id": "49d166fa-37b7-462b-853f-f9f1bef6767c",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "c5de8032-997b-44b3-b30e-301b843aefee",
+                    "path": "<XRController>{LeftHand}/gripButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "release",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
