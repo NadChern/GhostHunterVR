@@ -11,6 +11,7 @@ public enum GameOverReason
     PlayerDeath,
     Timeout
 }
+
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
@@ -24,6 +25,7 @@ public class GameManager : MonoBehaviour
     public event Action<float> OnTimeChanged;
 
     // Game state tracking
+    private GameStateMemento checkpoint;
     private bool gameActive = false;
     private bool gameOver = false;
     private bool dragonDefeated = false;
@@ -52,7 +54,9 @@ public class GameManager : MonoBehaviour
         {
             playerHealth.OnPlayerDeath += HandlePlayerDeath;
         }
-        GhostLogic.OnGhostDeath += HandleGhostDeath; 
+
+        GhostLogic.OnGhostDeath += HandleGhostDeath;
+        DragonLogic.OnDragonDeath += HandleDragonDeath;
     }
 
     private void Update()
@@ -75,17 +79,12 @@ public class GameManager : MonoBehaviour
         gameOver = false;
         dragonDefeated = false;
 
-        waveManager.StartFirstWave(); 
+        waveManager.StartFirstWave();
     }
 
     private void CheckWaveProgression()
     {
         if (gameOver) return;
-        if (waveManager.ShouldSpawnDragon(gameTimer))
-        {
-            waveManager.MarkDragonSpawned();
-            Debug.Log("Dragon spawned!");
-        }
 
         if (waveManager.CurrentWave == 0 && gameTimer >= waveManager.GetTimeToStartWave(1))
         {
@@ -123,9 +122,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void HandleDragonDeath() 
+    private void HandleDragonDeath(DragonLogic dragon)
     {
         dragonDefeated = true;
+        Debug.Log("[GameManager] Dragon has been defeated! Victory condition met.");
+        AddScore(100);
     }
 
     private void HandleGhostDeath(GhostLogic ghost)
@@ -140,12 +141,49 @@ public class GameManager : MonoBehaviour
         OnScoreChange?.Invoke(currentScore);
     }
 
+    // Save checkpoint at wave transitions
+    public void SaveCheckpoint()
+    {
+        if (playerHealth != null)
+        {
+            checkpoint = new GameStateMemento(
+                currentScore,
+                gameTimer,
+                waveManager.CurrentWave,
+                playerHealth.CurrentHealth,
+                dragonDefeated
+            );
+        }
+    }
+
+    // Restore from checkpoint (for continue feature)
+    public void LoadCheckpoint()
+    {
+        if (checkpoint != null)
+        {
+            currentScore = checkpoint.savedScore;
+            gameTimer = checkpoint.savedTime;
+            dragonDefeated = checkpoint.savedDragonDefeated;
+
+            if (playerHealth != null)
+                playerHealth.SetHealth(checkpoint.savedPlayerHealth);
+
+            // Restore wave state
+            waveManager.SetCurrentWave(checkpoint.savedWave);
+
+            OnScoreChange?.Invoke(currentScore);
+            OnTimeChanged?.Invoke(gameTimer);
+        }
+    }
+
     private void OnDestroy()
     {
         if (playerHealth != null)
         {
             playerHealth.OnPlayerDeath -= HandlePlayerDeath;
         }
+
         GhostLogic.OnGhostDeath -= HandleGhostDeath;
+        DragonLogic.OnDragonDeath -= HandleDragonDeath;
     }
 }

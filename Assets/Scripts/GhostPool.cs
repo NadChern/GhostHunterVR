@@ -55,6 +55,7 @@ public class GhostPool : MonoBehaviour
               {
                      ghostLogic.ResetGhost(); // reset rigidbody, health etc
                      ghostLogic.ApplySettings(waveSettings); // apply wave-specific speed, health etc
+                     FreezeEffectController.Instance?.RegisterGhost(ghostLogic); // register with freeze effect
               }
 
               return ghost;
@@ -63,6 +64,12 @@ public class GhostPool : MonoBehaviour
        public void ReturnGhost(GameObject ghost)
        {
               if (ghost == null) return;
+              GhostLogic ghostLogic = ghost.GetComponent<GhostLogic>();
+              if (ghostLogic != null)
+              {
+                     // Unregister ghost from freeze effect controller
+                     FreezeEffectController.Instance?.UnregisterGhost(ghostLogic);
+              }
               ghost.SetActive(false);
               ghostPool.Enqueue(ghost);
        }

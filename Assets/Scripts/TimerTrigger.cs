@@ -4,9 +4,6 @@ using UnityEngine.Events;
 
 public class TimerTrigger : MonoBehaviour
 {
-    [Header("Timer Configuration")]
-    [SerializeField] private string timerName = "Timer"; 
-    
     [SerializeField] private float delay = 1f;
     [SerializeField] private UnityEvent onTimerComplete;
     

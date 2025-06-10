@@ -3,28 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-
 public class WaveManager : MonoBehaviour
 {
     [SerializeField] private GameplaySettings gameplaySettings;
-
+    [SerializeField] private DragonSpawner dragonSpawner;
     public event Action<int, WaveSettings> OnWaveStart;
     public event Action<int> OnWaveEnd;
     public List<UnityEvent> waveEvents;
 
     private int currentWave = -1;
-    private bool dragonSpawnedThisWave = false;
-    private const float DRAGON_SPAWN_PERCENT = 0.75f;
 
     public int CurrentWave => currentWave;
-    public bool DragonSpawned => dragonSpawnedThisWave;
 
     public WaveSettings GetCurrentWaveSettings() => gameplaySettings.GetWaveSettings(currentWave);
 
     public void StartFirstWave()
     {
         currentWave = 0;
-        dragonSpawnedThisWave = false;
         waveEvents[0]?.Invoke(); // sound effect etc
         Debug.Log($"Wave {currentWave} started (from StartFirstWave)");
         OnWaveStart?.Invoke(currentWave, gameplaySettings.GetWaveSettings(currentWave));
@@ -35,7 +30,6 @@ public class WaveManager : MonoBehaviour
         OnWaveEnd?.Invoke(currentWave);
         currentWave++;
         waveEvents[currentWave]?.Invoke();
-        dragonSpawnedThisWave = false;
         Debug.Log($"Wave {currentWave} started (from AdvanceWave)");
         OnWaveStart?.Invoke(currentWave, gameplaySettings.GetWaveSettings(currentWave));
     }
@@ -51,20 +45,14 @@ public class WaveManager : MonoBehaviour
         return totalTime;
     }
 
-    public bool ShouldSpawnDragon(float gameTimer)
+    public void SetCurrentWave(int waveIndex)
     {
-        if (!gameplaySettings.GetWaveSettings(currentWave).spawnDragon || dragonSpawnedThisWave)
+        if (waveIndex >= 0 && waveIndex < gameplaySettings.MaxWaves)
         {
-            return false;
+            currentWave = waveIndex;
+            Debug.Log($"Wave restored to: {currentWave}");
+
+            OnWaveStart?.Invoke(currentWave, gameplaySettings.GetWaveSettings(currentWave));
         }
-
-        float timeIntoThisWave = gameTimer - GetTimeToStartWave(currentWave);
-        float waveDuration = gameplaySettings.GetWaveSettings(currentWave).waveDuration;
-        return timeIntoThisWave >= waveDuration * DRAGON_SPAWN_PERCENT;
-    }
-
-    public void MarkDragonSpawned()
-    {
-        dragonSpawnedThisWave = true;
     }
 }

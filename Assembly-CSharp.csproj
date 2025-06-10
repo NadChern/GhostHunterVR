@@ -47,18 +47,22 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\GeneralSpawner.cs" />
-    <Compile Include="Assets\Scripts\HunterBallSpawner.cs" />
+    <Compile Include="Assets\Scripts\WayPointManager.cs" />
     <Compile Include="Assets\Scripts\ReleaseItem.cs" />
     <Compile Include="Assets\VRTemplateAssets\Scripts\PermissionsManager.cs" />
     <Compile Include="Assets\Scripts\GameplaySettings.cs" />
     <Compile Include="Assets\VRTemplateAssets\Scripts\VideoPlayerRenderTexture.cs" />
+    <Compile Include="Assets\Scripts\DragonSpawner.cs" />
     <Compile Include="Assets\VRTemplateAssets\Scripts\Rotator.cs" />
     <Compile Include="Assets\VRTemplateAssets\Scripts\XRKnob.cs" />
     <Compile Include="Assets\VRTemplateAssets\Scripts\BooleanToggleVisualsController.cs" />
     <Compile Include="Assets\VRTemplateAssets\Scripts\RayAttachModifier.cs" />
     <Compile Include="Assets\Scripts\PlayerHealth.cs" />
     <Compile Include="Assets\VRTemplateAssets\Scripts\XRPokeFollowAffordanceFill.cs" />
+    <Compile Include="Assets\Scripts\HuntingBallSpawner.cs" />
     <Compile Include="Assets\Scripts\IGhostState.cs" />
+    <Compile Include="Assets\Scripts\CountDownTimer.cs" />
+    <Compile Include="Assets\Scripts\GameStateMemento.cs" />
     <Compile Include="Assets\Scripts\RoamState.cs" />
     <Compile Include="Assets\Scripts\GhostBehaviour.cs" />
     <Compile Include="Assets\Scripts\WaveManager.cs" />
@@ -72,24 +76,26 @@
     <Compile Include="Assets\Scripts\TimerTrigger.cs" />
     <Compile Include="Assets\Scripts\UIMessageDisplay.cs" />
     <Compile Include="Assets\XR\DisableController.cs" />
+    <Compile Include="Assets\Scripts\BallCollisionHandler.cs" />
     <Compile Include="Assets\VRTemplateAssets\Scripts\DestroyObject.cs" />
     <Compile Include="Assets\VRTemplateAssets\Scripts\VideoTimeScrubControl.cs" />
     <Compile Include="Assets\Scripts\ISpawnable.cs" />
     <Compile Include="Assets\Scripts\RayGun.cs" />
+    <Compile Include="Assets\Scripts\UIGameOver.cs" />
     <Compile Include="Assets\VRTemplateAssets\Scripts\Callout.cs" />
     <Compile Include="Assets\VRTemplateAssets\Scripts\CalloutGazeController.cs" />
     <Compile Include="Assets\Scripts\GhostLogic.cs" />
     <Compile Include="Assets\Scripts\IDamageable.cs" />
     <Compile Include="Assets\Scripts\ChaseState.cs" />
+    <Compile Include="Assets\Scripts\DragonLogic.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\VRTemplateAssets\Scripts\StepManager.cs" />
+    <Compile Include="Assets\Scripts\HighScoreMemento.cs" />
     <Compile Include="Assets\Scripts\GhostPool.cs" />
     <Compile Include="Assets\Scripts\DissolveState.cs" />
     <Compile Include="Assets\VRTemplateAssets\Scripts\AnchorVisuals.cs" />
     <Compile Include="Assets\Scripts\GhostSpawner.cs" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
-    <None Include="Assets\Alvios\101ArtisticNoise\NoiseFlow.shader" />
-    <None Include="Assets\Alvios\101ArtisticNoise\Readme.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile-2-Pass.shader" />
     <None Include="Assets\VRTemplateAssets\Shaders\FauxBlurURP.shader" />
@@ -911,8 +917,8 @@
     <Reference Include="Unity.Multiplayer.Center.Editor">
       <HintPath>C:\Users\kuzne\Documents\GhostHunterVR\Library\ScriptAssemblies\Unity.Multiplayer.Center.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.ShaderGraph.Editor">
-      <HintPath>C:\Users\kuzne\Documents\GhostHunterVR\Library\ScriptAssemblies\Unity.ShaderGraph.Editor.dll</HintPath>
+    <Reference Include="Unity.Splines">
+      <HintPath>C:\Users\kuzne\Documents\GhostHunterVR\Library\ScriptAssemblies\Unity.Splines.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Mathematics.Editor">
       <HintPath>C:\Users\kuzne\Documents\GhostHunterVR\Library\ScriptAssemblies\Unity.Mathematics.Editor.dll</HintPath>
@@ -935,6 +941,9 @@
     <Reference Include="Unity.Collections">
       <HintPath>C:\Users\kuzne\Documents\GhostHunterVR\Library\ScriptAssemblies\Unity.Collections.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.ShaderGraph.Editor">
+      <HintPath>C:\Users\kuzne\Documents\GhostHunterVR\Library\ScriptAssemblies\Unity.ShaderGraph.Editor.dll</HintPath>
+    </Reference>
     <Reference Include="PPv2URPConverters">
       <HintPath>C:\Users\kuzne\Documents\GhostHunterVR\Library\ScriptAssemblies\PPv2URPConverters.dll</HintPath>
     </Reference>
@@ -952,6 +961,9 @@
     </Reference>
     <Reference Include="Unity.RenderPipelines.Universal.Config.Runtime">
       <HintPath>C:\Users\kuzne\Documents\GhostHunterVR\Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Config.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Splines.Editor">
+      <HintPath>C:\Users\kuzne\Documents\GhostHunterVR\Library\ScriptAssemblies\Unity.Splines.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Universal.Editor">
       <HintPath>C:\Users\kuzne\Documents\GhostHunterVR\Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Editor.dll</HintPath>
@@ -977,11 +989,11 @@
     <Reference Include="Unity.XR.OpenXR.Features.RuntimeDebugger.Editor">
       <HintPath>C:\Users\kuzne\Documents\GhostHunterVR\Library\ScriptAssemblies\Unity.XR.OpenXR.Features.RuntimeDebugger.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.XR.Hands">
-      <HintPath>C:\Users\kuzne\Documents\GhostHunterVR\Library\ScriptAssemblies\Unity.XR.Hands.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.TestTools.CodeCoverage.Editor.OpenCover.Mono.Reflection">
       <HintPath>C:\Users\kuzne\Documents\GhostHunterVR\Library\ScriptAssemblies\Unity.TestTools.CodeCoverage.Editor.OpenCover.Mono.Reflection.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.XR.Hands">
+      <HintPath>C:\Users\kuzne\Documents\GhostHunterVR\Library\ScriptAssemblies\Unity.XR.Hands.dll</HintPath>
     </Reference>
     <Reference Include="Unity.XR.Management">
       <HintPath>C:\Users\kuzne\Documents\GhostHunterVR\Library\ScriptAssemblies\Unity.XR.Management.dll</HintPath>

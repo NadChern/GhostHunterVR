@@ -28,7 +28,6 @@ public class RayGun : MonoBehaviour
             Shoot();
         }
     }
-
     void Shoot()
     {
         // play shooting sound

@@ -25,11 +25,11 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _Ice:
-        m_Texture: {fileID: 2800000, guid: 210743b88c99bcf45b28c3a4a4a3e178, type: 3}
+        m_Texture: {fileID: 2800000, guid: 10d9c8ce75b3c0b438581a34e5b4f79e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 210743b88c99bcf45b28c3a4a4a3e178, type: 3}
+        m_Texture: {fileID: 2800000, guid: 10d9c8ce75b3c0b438581a34e5b4f79e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Texture2D:
@@ -50,10 +50,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Emission: 1
+    - _Emission: 27
     - _QueueControl: 0
     - _QueueOffset: 10
-    - _Sides: 12.3
+    - _Sides: 6.6
     - _XRMotionVectorsPass: 1
     m_Colors: []
   m_BuildTextureStacks: []

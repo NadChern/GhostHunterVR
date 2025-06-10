@@ -9,9 +9,6 @@ public class ChaseState : IGhostState
     {
         ghost.ghost.PlayAnimation("Move");
         attackTimer = 0f;
-
-        FreezeEffectController freezeController = GameObject.FindFirstObjectByType<FreezeEffectController>();
-        freezeController?.SetTargetGhost(ghost.ghost);
     }
 
     public void UpdateState(GhostBehaviour ghost)
@@ -67,7 +64,6 @@ public class ChaseState : IGhostState
             ghost.SwitchState(ghost.DissolveState);
         }
     }
-
 
     public void ExitState(GhostBehaviour ghost)
     {

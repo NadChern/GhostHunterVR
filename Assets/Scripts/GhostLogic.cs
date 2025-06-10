@@ -37,7 +37,7 @@ public class GhostLogic : MonoBehaviour, IDamageable
         animator = GetComponent<Animator>();
     }
 
-    void Start()
+   private void Start()
     {
         player = Camera.main?.transform;
         Debug.Log(player);
